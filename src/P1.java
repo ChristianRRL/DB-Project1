@@ -1,0 +1,316 @@
+import java.io.*;
+import java.util.*;
+
+public class P1
+{
+
+	// coach: CARTEKE 1999 ken carter 77 33 7 3 RIC
+	// team: RIC Richmond Oilers A
+
+	/* Define data structures for holding the data here */
+	public List<Coach> coachList;
+	public List<Team> teamList;
+	private Scanner sc;
+
+	public P1()
+	{
+		/* initialize the data structures */
+		coachList = new ArrayList<Coach>();
+		teamList = new ArrayList<Team>();
+		
+	}
+
+	public void run()
+	{
+		CommandParser parser = new CommandParser();
+
+		System.out.println("The mini-DB of NBA coaches and teams");
+		System.out.println("Please enter a command.  Enter 'help' for a list of commands.");
+		System.out.println();
+		System.out.print("> ");
+
+		Command cmd = null;
+		while ((cmd = parser.fetchCommand()) != null) 
+		{
+//			System.out.println(cmd);
+
+			boolean result = false;
+
+			if (cmd.getCommand().equals("help"))
+			{
+				result = doHelp();
+
+				/* You need to implement all the following commands */
+
+			} 
+			else if (cmd.getCommand().equals("add_coach"))
+			{
+				// add_coach CARTEKE 1999 ken carter 77 33 7 3 RIC
+												
+				if (cmd.getParameters().length == 9) {
+
+					try {
+						Coach tempCoach = new Coach(cmd.getParameters()[0],
+								Integer.parseInt(cmd.getParameters()[1]),
+								cmd.getParameters()[2],
+								cmd.getParameters()[3],
+								Integer.parseInt(cmd.getParameters()[4]),
+								Integer.parseInt(cmd.getParameters()[5]),
+								Integer.parseInt(cmd.getParameters()[6]),
+								Integer.parseInt(cmd.getParameters()[7]),
+								cmd.getParameters()[8]);
+						if (tempCoach.verifyParameters()) {
+							coachList.add(tempCoach);
+							System.out.println("Coach successfully added to list.");
+						}
+					}
+					catch(Exception e) {
+						System.out.println("One or more parameters of incorrect type.");
+						System.out.println("Please try again.");
+					}					
+				}
+				else if (cmd.getParameters().length < 9) {
+					System.out.println("Too few parameters.");
+					System.out.println("Please try again.");
+				}
+				else {
+					System.out.println("Too many parameters.");
+					System.out.println("Please try again.");
+				}
+				
+			} 
+			else if (cmd.getCommand().equals("add_team"))
+			{
+				// add_team RIC Richmond Oilers A
+				
+				if (cmd.getParameters().length == 4) {
+					
+					try {
+						Team tempTeam = new Team(cmd.getParameters()[0],
+								cmd.getParameters()[1],
+								cmd.getParameters()[2],
+								cmd.getParameters()[3].charAt(0));						
+						if (tempTeam.verifyParameters()) {
+							teamList.add(tempTeam);
+							System.out.println("Team successfully added to list.");
+						}
+					}
+					catch (Exception e) {
+						System.out.println("Invalid parameters.");
+						System.out.println("Please try again.");
+					}
+				}
+				else if (cmd.getParameters().length < 4) {
+					System.out.println("Too few parameters.");
+					System.out.println("Please try again.");
+				}
+				else {
+					System.out.println("Too many parameters.");
+					System.out.println("Please try again.");
+				}
+			} 
+			else if (cmd.getCommand().equals("print_coaches"))
+			{
+				for (Coach coach : coachList) {
+					coach.printCoaches();
+				}
+			} 
+			else if (cmd.getCommand().equals("print_teams"))
+			{
+				for (Team team : teamList) {
+					team.printTeams();
+				}
+			} 
+			else if (cmd.getCommand().equals("coaches_by_name"))
+			{
+//				for (Coach coach : coachList) {
+//					
+//				}
+			} 
+			else if (cmd.getCommand().equals("teams_by_city"))
+			{
+
+			} 
+			else if (cmd.getCommand().equals("load_coaches"))
+			{
+				try {
+					sc = new Scanner(new File("coaches_season.txt"));
+					while (sc != null) {
+						String temp = sc.nextLine();
+						if (temp != null) {
+							System.out.println(temp);
+						}
+						else {
+							break;
+						}
+					}
+				}
+				catch (Exception e) {
+					System.out.println("404 - File not found.");
+				}
+			}
+			else if (cmd.getCommand().equals("load_teams"))
+			{
+
+			} 
+			else if (cmd.getCommand().equals("best_coach"))
+			{
+
+			} 
+			
+//			// Test Cases
+//add_coach BEGIN01    1993  John   Proba1    32  50  2  0   HOU
+//add_coach JONESKC01  1992  KC     Jones     48  34  3  4   WAC
+//add_coach MOTTADI01  1991  Dick   Motta     48  34  4  5   WAS
+//add_coach YOUNGDR01  1993  Draff  Young      0   3  3  0   KCK
+//add_coach UNSELWE01  1994  Wes    Unseld    39  43  8  0   WA1
+//add_coach UNSELWE01  1993  Wes    Unseld    30  25  7  3   WA1
+//add_coach YOUNGDR01  1992  Draff  Young     36  46  0  0   KCK
+//add_coach EGANJO01   1993  John   Egan      32  50  0  0   HOU
+//add_coach END01      1993  John   end+end   32  50  7  0   HOU
+//
+//search_coaches first_name=John
+
+			else if (cmd.getCommand().equals("search_coaches"))
+			{
+				for (int i = 0; i < cmd.getParameters().length; i++) {
+					String attribute[] = cmd.getParameters()[i].split("=");
+					if (!verifyAttribute(attribute[0])) {
+						continue;
+					}
+					
+					for (int j = 0; j < coachList.size(); j++) {
+						if (coachList.get(j).searchAttribute(attribute[0], attribute[1])) {
+							coachList.get(j).printCoaches();
+//							coachList.remove(j);
+						}
+					}
+				}				
+				
+//				List<Coach> tempCoachList = new ArrayList<Coach>(coachList);
+//				
+//				for (int i = 0; i < cmd.getParameters().length; i++) {
+//					String attribute[] = cmd.getParameters()[i].split("=");
+//					if (!verifyAttribute(attribute[0])) {
+//						continue;
+//					}
+//					
+//					for (int j = 0; j < coachList.size(); j++) {
+//						if (!tempCoachList.get(j).searchAttribute(attribute[0], attribute[1])) {
+////							tempCoachList.get(j).printCoaches();
+//							tempCoachList.remove(j);
+//						}
+//					}
+//				}	
+//				
+//				for (Coach coach : tempCoachList) {
+//					coach.printCoaches();
+//				}
+
+			} 
+			else if (cmd.getCommand().equals("delete_coaches"))
+			{
+				
+			} 
+			else if (cmd.getCommand().equals("exit"))
+			{
+				System.out.println("Leaving the database, goodbye!");
+				break;
+			} 
+			else if (cmd.getCommand().equals(""))
+			{
+
+			} 
+			else
+			{
+				System.out.println("Invalid Command, try again!");
+			}
+
+			if (result)
+			{
+				// ...
+			}
+
+			System.out.print("> ");
+		}
+	}
+
+	private boolean doHelp()
+	{
+		System.out.println("add_coach ID SEASON FIRST_NAME LAST_NAME SEASON_WIN ");
+		System.out.println("          EASON_LOSS PLAYOFF_WIN PLAYOFF_LOSS TEAM - add new coach data");
+		System.out.println("add_team ID LOCATION NAME LEAGUE - add a new team");
+		System.out.println("print_coaches - print a listing of all coaches");
+		System.out.println("print_teams - print a listing of all teams");
+		System.out.println("coaches_by_name NAME - list info of coaches with the specified name");
+		System.out.println("teams_by_city CITY - list the teams in the specified city");
+		System.out.println("load_coach FILENAME - bulk load of coach info from a file");
+		System.out.println("load_team FILENAME - bulk load of team info from a file");
+		System.out
+				.println("best_coach SEASON - print the name of the coach with the most netwins in a specified season");
+		System.out.println(
+				"search_coaches field=VALUE - print the name of the coach satisfying the specified conditions");
+		System.out.println("delete_coaches field=VALUE - delete the coach satisfying the specified conditions");
+		System.out.println("exit - quit the program");
+		return true;
+	}
+	
+	private boolean verifyAttribute(String attribute) {
+		
+		// CoachCoach_ID : a alphanumeric string,
+		if (attribute.equals("Coach_ID")) {
+			return true;
+		}
+		
+		// season : 4 digit year,
+		if (attribute.equals("season")) {
+			return true;
+		}
+		
+		// first_name : any reasonable English name ,
+		if (attribute.equals("first_name")) {
+			return true;
+		}
+		
+		// last_name : any reasonable English name,
+		if (attribute.equals("last_name")) {
+			return true;
+		}
+		
+		// season_win : non-negative integer,
+		if (attribute.equals("season_win")) {
+			return true;
+		}
+		
+		// season_loss : non-negative integer,
+		if (attribute.equals("season_loss")) {
+			return true;
+		}
+		
+		// playoff_win : non-negative integer,
+		if (attribute.equals("playoff_win")) {
+			return true;
+		}
+		
+		// playoff_loss : non-negative integer,
+		if (attribute.equals("playoff_loss")) {
+			return true;
+		}
+		
+		// team : capital letters and/or digits)
+		if (attribute.equals("team")) {
+			return true;
+		}		
+		
+		return false;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args)
+	{
+		new P1().run();
+	}
+
+}
