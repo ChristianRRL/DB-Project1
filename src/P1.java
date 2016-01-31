@@ -125,8 +125,7 @@ public class P1
 			{
 				for (int i = 0; i < coachList.size(); i++) {
 					if (cmd.getParameters().length <= 0) {
-						coachList.get(i).printCoaches();
-						continue;
+						break;
 					}
 					if (coachList.get(i).getLastName().equals(cmd.getParameters()[0])) {
 						coachList.get(i).printCoaches();
@@ -137,8 +136,7 @@ public class P1
 			{
 				for (int i = 0; i < teamList.size(); i++) {
 					if (cmd.getParameters().length <= 0) {
-						teamList.get(i).printTeams();
-						continue;
+						break;
 					}
 					if (teamList.get(i).getLocation().equals(cmd.getParameters()[0])) {
 						teamList.get(i).printTeams();
@@ -169,7 +167,26 @@ public class P1
 			} 
 			else if (cmd.getCommand().equals("best_coach"))
 			{
-
+				int bestCoachIndex = -1;
+				int tempEquation1 = -1;
+				int tempEquation2 = -2;
+				
+				for (int i = 0; i < coachList.size(); i++) {
+					if (cmd.getParameters().length <= 0) {
+						break;
+					}
+					if (coachList.get(i).getSeason() == Integer.parseInt(cmd.getParameters()[0])) {
+						tempEquation1 = coachList.get(i).getSeasonWin() - coachList.get(i).getSeasonLoss()
+								+ coachList.get(i).getPlayoffWin() - coachList.get(i).getPlayoffLoss();
+						if (tempEquation1 > tempEquation2) {
+							bestCoachIndex = i;
+							tempEquation2 = tempEquation1;
+						}
+					}
+				}
+				
+				coachList.get(bestCoachIndex).printCoaches();
+				
 			} 
 			else if (cmd.getCommand().equals("search_coaches"))
 			{
@@ -242,7 +259,7 @@ public class P1
 	private boolean doHelp()
 	{
 		System.out.println("add_coach ID SEASON FIRST_NAME LAST_NAME SEASON_WIN ");
-		System.out.println("          EASON_LOSS PLAYOFF_WIN PLAYOFF_LOSS TEAM - add new coach data");
+		System.out.println("          SEASON_LOSS PLAYOFF_WIN PLAYOFF_LOSS TEAM - add new coach data");
 		System.out.println("add_team ID LOCATION NAME LEAGUE - add a new team");
 		System.out.println("print_coaches - print a listing of all coaches");
 		System.out.println("print_teams - print a listing of all teams");
