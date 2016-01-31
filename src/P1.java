@@ -193,7 +193,7 @@ public class P1
 			} 
 			else if (cmd.getCommand().equals("delete_coaches"))
 			{
-				
+				// delete_coaches
 			} 
 			else if (cmd.getCommand().equals("exit"))
 			{
