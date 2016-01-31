@@ -123,9 +123,15 @@ public class P1
 			} 
 			else if (cmd.getCommand().equals("coaches_by_name"))
 			{
-//				for (Coach coach : coachList) {
-//					
-//				}
+				for (int i = 0; i < coachList.size(); i++) {
+					if (cmd.getParameters().length <= 0) {
+						coachList.get(i).printCoaches();
+						continue;
+					}
+					if (coachList.get(i).getLastName().equals(cmd.getParameters()[0])) {
+						coachList.get(i).printCoaches();
+					}
+				}
 			} 
 			else if (cmd.getCommand().equals("teams_by_city"))
 			{
