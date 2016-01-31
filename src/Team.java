@@ -87,6 +87,12 @@ public class Team {
 		return true;
 	}
 	
+	public boolean teams_by_city(String city) {
+		
+		
+		return true;
+	}
+	
 	public void printTeams() {
 		System.out.println(
 				getTeamID() + " " + getLocation() + " " + getTeamName() + " " + getLeague());
