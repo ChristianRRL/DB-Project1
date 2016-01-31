@@ -194,6 +194,27 @@ public class P1
 			else if (cmd.getCommand().equals("delete_coaches"))
 			{
 				// delete_coaches
+				boolean isCoachFound = true;
+				boolean isAttribute = true;
+				
+				for (int i = coachList.size() - 1; i >= 0; i--) {
+					for (int j = 0; j < cmd.getParameters().length; j++) {
+						String attribute[] = cmd.getParameters()[j].split("=");
+						isAttribute = verifyAttribute(attribute[0]); 
+						if (!isAttribute) {
+							continue;
+						}
+						isCoachFound = coachList.get(i).searchAttribute(attribute[0], attribute[1]);
+						if (!isCoachFound) {
+							break;
+						}
+					}
+					if (isCoachFound && isAttribute && cmd.getParameters().length > 0) {
+						coachList.remove(i);
+					}
+				}
+				
+				
 			} 
 			else if (cmd.getCommand().equals("exit"))
 			{
