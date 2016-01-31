@@ -206,7 +206,7 @@ public class Coach
 	
 	public boolean searchAttribute(String field, String value) {
 		
-//		System.out.println("***" + field + " " + value + ": " + field.equals("first_name") + " " + value.equals(getFirstName()));
+//		System.out.println("***" + getFirstName() + " " + value + ": " + field.equals("first_name") + " " + value.equals(getFirstName()));
 		
 		// Coach_ID : a alphanumeric string,
 		if (field.equals("Coach_ID") && value.equals(getCoachID())) {

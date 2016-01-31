@@ -157,56 +157,25 @@ public class P1
 			{
 
 			} 
-			
-//			// Test Cases
-//add_coach BEGIN01    1993  John   Proba1    32  50  2  0   HOU
-//add_coach JONESKC01  1992  KC     Jones     48  34  3  4   WAC
-//add_coach MOTTADI01  1991  Dick   Motta     48  34  4  5   WAS
-//add_coach YOUNGDR01  1993  Draff  Young      0   3  3  0   KCK
-//add_coach UNSELWE01  1994  Wes    Unseld    39  43  8  0   WA1
-//add_coach UNSELWE01  1993  Wes    Unseld    30  25  7  3   WA1
-//add_coach YOUNGDR01  1992  Draff  Young     36  46  0  0   KCK
-//add_coach EGANJO01   1993  John   Egan      32  50  0  0   HOU
-//add_coach END01      1993  John   end+end   32  50  7  0   HOU
-//
-//search_coaches first_name=John
-
 			else if (cmd.getCommand().equals("search_coaches"))
 			{
-				for (int i = 0; i < cmd.getParameters().length; i++) {
-					String attribute[] = cmd.getParameters()[i].split("=");
-					if (!verifyAttribute(attribute[0])) {
-						continue;
-					}
-					
-					for (int j = 0; j < coachList.size(); j++) {
-						if (coachList.get(j).searchAttribute(attribute[0], attribute[1])) {
-							coachList.get(j).printCoaches();
-//							coachList.remove(j);
+				boolean isCoachFound = true;
+				
+				for (int i = 0; i < coachList.size(); i++) {
+					for (int j = 0; j < cmd.getParameters().length; j++) {
+						String attribute[] = cmd.getParameters()[j].split("=");
+						if (!verifyAttribute(attribute[0])) {
+							continue;
+						}
+						isCoachFound = coachList.get(i).searchAttribute(attribute[0], attribute[1]);
+						if (!isCoachFound) {
+							break;
 						}
 					}
-				}				
-				
-//				List<Coach> tempCoachList = new ArrayList<Coach>(coachList);
-//				
-//				for (int i = 0; i < cmd.getParameters().length; i++) {
-//					String attribute[] = cmd.getParameters()[i].split("=");
-//					if (!verifyAttribute(attribute[0])) {
-//						continue;
-//					}
-//					
-//					for (int j = 0; j < coachList.size(); j++) {
-//						if (!tempCoachList.get(j).searchAttribute(attribute[0], attribute[1])) {
-////							tempCoachList.get(j).printCoaches();
-//							tempCoachList.remove(j);
-//						}
-//					}
-//				}	
-//				
-//				for (Coach coach : tempCoachList) {
-//					coach.printCoaches();
-//				}
-
+					if (isCoachFound) {
+						coachList.get(i).printCoaches();
+					}
+				}
 			} 
 			else if (cmd.getCommand().equals("delete_coaches"))
 			{
