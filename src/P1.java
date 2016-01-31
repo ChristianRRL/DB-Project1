@@ -127,17 +127,6 @@ public class P1
 //					
 //				}
 			} 
-			
-//add_team BEGIN	Begin		fuuls  	   N
-//add_team WA1  	Washington  	Bullets    N
-//add_team HMV  	Houston  	Mavericks  A
-//add_team WAC  	Washington  	Caps       A
-//add_team KCK  	Kansas  	Kings      N
-//add_team HOU  	Houston  	Rockets    N
-//add_team WAS  	Washington  	Wizards    N
-//add_team KEN  	Kentucky  	Colonels   A
-//add_team END  	End  		fulljusi   A
-
 			else if (cmd.getCommand().equals("teams_by_city"))
 			{
 				for (int i = 0; i < teamList.size(); i++) {
