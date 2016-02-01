@@ -168,6 +168,22 @@ public class P1
 			}
 			else if (cmd.getCommand().equals("load_teams"))
 			{
+				try {
+					sc = new Scanner(new File(cmd.getParameters()[0]));
+					String teamLine = sc.nextLine();
+					while (sc.hasNextLine()) {
+						teamLine = sc.nextLine();
+						if (teamLine == null) {
+							break;
+						}
+						String parameters[] = teamLine.split(",");
+						Team tempTeam = new Team(parameters[0], parameters[1], parameters[2], parameters[3].charAt(0));
+						teamList.add(tempTeam);
+					}
+				}
+				catch (Exception e) {
+					System.out.println("404 - File not found.");
+				}
 
 			} 
 			else if (cmd.getCommand().equals("best_coach"))
