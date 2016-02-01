@@ -123,11 +123,16 @@ public class P1
 			} 
 			else if (cmd.getCommand().equals("coaches_by_name"))
 			{
+				String name = cmd.getParameters()[0];
+				if (cmd.getParameters()[0].contains("+")) {
+					name = cmd.getParameters()[0].replace("+", " ");
+				}
+				
 				for (int i = 0; i < coachList.size(); i++) {
 					if (cmd.getParameters().length <= 0) {
 						break;
 					}
-					if (coachList.get(i).getLastName().equals(cmd.getParameters()[0])) {
+					if (coachList.get(i).getLastName().equals(name)) {
 						coachList.get(i).printCoaches();
 					}
 				}
@@ -206,12 +211,14 @@ public class P1
 					}
 				}
 				
-				coachList.get(bestCoachIndex).printCoaches();
+				System.out.println(coachList.get(bestCoachIndex).getFirstName() + " " + coachList.get(bestCoachIndex).getLastName());
+//				coachList.get(bestCoachIndex).printCoaches();
 				
 			} 
 			else if (cmd.getCommand().equals("search_coaches"))
 			{
 				boolean isCoachFound = true;
+				boolean isAnyCoachFound = false;
 				
 				for (int i = 0; i < coachList.size(); i++) {
 					for (int j = 0; j < cmd.getParameters().length; j++) {
@@ -226,7 +233,11 @@ public class P1
 					}
 					if (isCoachFound) {
 						coachList.get(i).printCoaches();
+						isAnyCoachFound = true;
 					}
+				}
+				if (!isAnyCoachFound) {
+					System.out.println("No coaches found!");
 				}
 			} 
 			else if (cmd.getCommand().equals("delete_coaches"))
@@ -235,21 +246,30 @@ public class P1
 				boolean isCoachFound = true;
 				boolean isAttribute = true;
 				
-				for (int i = coachList.size() - 1; i >= 0; i--) {
-					for (int j = 0; j < cmd.getParameters().length; j++) {
-						String attribute[] = cmd.getParameters()[j].split("=");
-						isAttribute = verifyAttribute(attribute[0]); 
-						if (!isAttribute) {
-							continue;
+				try {				
+					for (int i = coachList.size() - 1; i >= 0; i--) {
+						for (int j = 0; j < cmd.getParameters().length; j++) {
+							String attribute[] = cmd.getParameters()[j].split("=");
+							isAttribute = verifyAttribute(attribute[0]); 
+							if (!isAttribute) {
+								continue;
+							}
+							isCoachFound = coachList.get(i).searchAttribute(attribute[0], attribute[1]);
+							if (!isCoachFound) {
+								break;
+							}
 						}
-						isCoachFound = coachList.get(i).searchAttribute(attribute[0], attribute[1]);
-						if (!isCoachFound) {
-							break;
+						if (isCoachFound && cmd.getParameters().length > 0) {
+//							System.out.println("Coach deleted");
+							coachList.remove(i);
+						}
+						else {
+//							System.out.println(isCoachFound + "\t" + isAttribute + "\t" + (cmd.getParameters().length > 0));
 						}
 					}
-					if (isCoachFound && isAttribute && cmd.getParameters().length > 0) {
-						coachList.remove(i);
-					}
+				}
+				catch(Exception e) {
+					System.out.print("405 Error - Cannot perform delete operation.");
 				}
 				
 				
