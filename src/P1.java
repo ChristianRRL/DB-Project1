@@ -143,18 +143,22 @@ public class P1
 					}
 				}
 			} 
+//			load_coaches coaches_season.txt
 			else if (cmd.getCommand().equals("load_coaches"))
 			{
 				try {
-					sc = new Scanner(new File("coaches_season.txt"));
-					while (sc != null) {
-						String temp = sc.nextLine();
-						if (temp != null) {
-							System.out.println(temp);
-						}
-						else {
+					sc = new Scanner(new File(cmd.getParameters()[0]));
+					String coachLine = sc.nextLine();
+					while (sc.hasNextLine()) {
+						coachLine = sc.nextLine();
+						if (coachLine == null) {
 							break;
 						}
+						String parameters[] = coachLine.split(",");
+						Coach tempCoach = new Coach(parameters[0], Integer.parseInt(parameters[1]), parameters[3], 
+								parameters[4], Integer.parseInt(parameters[5]), Integer.parseInt(parameters[6]), 
+								Integer.parseInt(parameters[7]), Integer.parseInt(parameters[8]), parameters[9]);
+						coachList.add(tempCoach);
 					}
 				}
 				catch (Exception e) {
