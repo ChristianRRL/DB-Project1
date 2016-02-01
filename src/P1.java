@@ -139,11 +139,16 @@ public class P1
 			} 
 			else if (cmd.getCommand().equals("teams_by_city"))
 			{
+				String city = cmd.getParameters()[0];
+				if (cmd.getParameters()[0].contains("+")) {
+					city = cmd.getParameters()[0].replace("+", " ");
+				}
+				
 				for (int i = 0; i < teamList.size(); i++) {
 					if (cmd.getParameters().length <= 0) {
 						break;
 					}
-					if (teamList.get(i).getLocation().equals(cmd.getParameters()[0])) {
+					if (teamList.get(i).getLocation().equals(city)) {
 						teamList.get(i).printTeams();
 					}
 				}
