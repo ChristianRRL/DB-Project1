@@ -160,7 +160,7 @@ public class Coach
 		}
 
 		// first_name: any reasonable English name
-		if (!getFirstName().matches("[A-Za-z]+"))
+		if (!getFirstName().matches("[A-Za-z0-9]+"))
 		{
 			return false;
 		}

@@ -156,9 +156,9 @@ public class P1
 							break;
 						}
 						String parameters[] = coachLine.split(",");
-						Coach tempCoach = new Coach(parameters[0], Integer.parseInt(parameters[1]), parameters[3], 
-								parameters[4], Integer.parseInt(parameters[5]), Integer.parseInt(parameters[6]), 
-								Integer.parseInt(parameters[7]), Integer.parseInt(parameters[8]), parameters[9]);
+						Coach tempCoach = new Coach(parameters[0].trim(), Integer.parseInt(parameters[1].trim()), parameters[3].trim(), 
+								parameters[4].trim(), Integer.parseInt(parameters[5].trim()), Integer.parseInt(parameters[6].trim()), 
+								Integer.parseInt(parameters[7].trim()), Integer.parseInt(parameters[8].trim()), parameters[9].trim());
 						coachList.add(tempCoach);
 					}
 				}
