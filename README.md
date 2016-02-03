@@ -51,5 +51,4 @@ Obviously, your job here would be to process the argument by replacing the "+" s
 
 ###Acknowledgements
 Data used in this project is provided by basketballconference.com
-![Image of SteroidToCat](https://octodex.github.com/images/steroidtocat.png)
-Don't mess with the Octocat
+![Image of DodgeToCat_V2](https://octodex.github.com/images/dodgetocat_v2.png)
